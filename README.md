@@ -26,7 +26,7 @@ This project is a simple password generator with a graphical user interface (GUI
 
     ```sh
     python3 -m venv venv
-    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+    source venv/bin/activate
     ```
 
 3. **Install the required packages:**
@@ -53,7 +53,3 @@ This project is a simple password generator with a graphical user interface (GUI
 
 - `pass_generate.py`: Contains the `PassGenerate` class responsible for generating passwords.
 - `password_generator_app.py`: Contains the `PasswordGeneratorApp` class and the main application logic.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
