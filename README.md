@@ -18,7 +18,7 @@ This project is a simple password generator with a graphical user interface (GUI
 1. **Clone the repository:**
 
     ```sh
-    git clone https://github.com/yourusername/password-generator.git
+    git clone git@github.com:DicuC/password-generator.git
     cd password-generator
     ```
 
