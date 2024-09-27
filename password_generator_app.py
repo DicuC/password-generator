@@ -36,15 +36,16 @@ class PasswordGeneratorApp(QtWidgets.QWidget):
         try:
             length = int(self.length_entry.text())
             self.password_generator.set_length(length)
-            password = self.password_generator.generate()
-            self.result_label.setText(f'Generated Password: {password}')
+            # Generate encoded password
+            encoded_password = self.password_generator.generate_encoded_password()
+            self.result_label.setText(f'Generated Encoded Password: {encoded_password}')
         except ValueError as e:
             QtWidgets.QMessageBox.critical(self, 'Error', str(e))
 
     def copy_to_clipboard(self):
         clipboard = QtWidgets.QApplication.clipboard()
         clipboard.setText(self.result_label.text().split(': ')[1])
-        QtWidgets.QMessageBox.information(self, 'Copied', 'Password copied to clipboard')
+        QtWidgets.QMessageBox.information(self, 'Copied', 'Encoded password copied to clipboard')
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
