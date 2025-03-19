@@ -1,6 +1,6 @@
 import random
 import string
-import urllib.parse # For URL encoding
+import urllib.parse  # For URL encoding
 
 class PassGenerate:
     def __init__(self, length=16):
@@ -26,7 +26,7 @@ class PassGenerate:
             raise ValueError("Password length should be at least 4.")
         self.length = length
 
-    def generate_encoded_password(self):
+    def generate_passwords(self):
         password = self.generate()
         encoded_password = urllib.parse.quote(password)
-        return encoded_password
+        return password, encoded_password

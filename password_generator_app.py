@@ -2,6 +2,7 @@ import sys
 from PyQt5 import QtWidgets
 from pass_generate import PassGenerate
 
+
 class PasswordGeneratorApp(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
@@ -22,12 +23,19 @@ class PasswordGeneratorApp(QtWidgets.QWidget):
         self.generate_button.clicked.connect(self.generate_password)
         self.layout.addWidget(self.generate_button)
 
-        self.copy_button = QtWidgets.QPushButton('Copy to Clipboard')
-        self.copy_button.clicked.connect(self.copy_to_clipboard)
-        self.layout.addWidget(self.copy_button)
+        self.normal_password_label = QtWidgets.QLabel('Normal Password:')
+        self.layout.addWidget(self.normal_password_label)
 
-        self.result_label = QtWidgets.QLabel('')
-        self.layout.addWidget(self.result_label)
+        self.encoded_password_label = QtWidgets.QLabel('Encoded Password:')
+        self.layout.addWidget(self.encoded_password_label)
+
+        self.copy_normal_button = QtWidgets.QPushButton('Copy Normal Password')
+        self.copy_normal_button.clicked.connect(self.copy_normal_to_clipboard)
+        self.layout.addWidget(self.copy_normal_button)
+
+        self.copy_encoded_button = QtWidgets.QPushButton('Copy Encoded Password')
+        self.copy_encoded_button.clicked.connect(self.copy_encoded_to_clipboard)
+        self.layout.addWidget(self.copy_encoded_button)
 
         self.setLayout(self.layout)
         self.password_generator = PassGenerate()
@@ -36,16 +44,25 @@ class PasswordGeneratorApp(QtWidgets.QWidget):
         try:
             length = int(self.length_entry.text())
             self.password_generator.set_length(length)
-            # Generate encoded password
-            encoded_password = self.password_generator.generate_encoded_password()
-            self.result_label.setText(f'Generated Encoded Password: {encoded_password}')
+            normal_password, encoded_password = self.password_generator.generate_passwords()
+
+            self.normal_password_label.setText(f'Normal Password: {normal_password}')
+            self.encoded_password_label.setText(f'Encoded Password: {encoded_password}')
         except ValueError as e:
             QtWidgets.QMessageBox.critical(self, 'Error', str(e))
 
-    def copy_to_clipboard(self):
+    def copy_normal_to_clipboard(self):
         clipboard = QtWidgets.QApplication.clipboard()
-        clipboard.setText(self.result_label.text().split(': ')[1])
+        password_text = self.normal_password_label.text().split(': ')[1]
+        clipboard.setText(password_text)
+        QtWidgets.QMessageBox.information(self, 'Copied', 'Normal password copied to clipboard')
+
+    def copy_encoded_to_clipboard(self):
+        clipboard = QtWidgets.QApplication.clipboard()
+        password_text = self.encoded_password_label.text().split(': ')[1]
+        clipboard.setText(password_text)
         QtWidgets.QMessageBox.information(self, 'Copied', 'Encoded password copied to clipboard')
+
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
